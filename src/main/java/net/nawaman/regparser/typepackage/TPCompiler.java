@@ -32,7 +32,7 @@ import net.nawaman.script.Signature;
 /**
  * Compiler - for Composable type. The compilation is from a function
  *
- * @author Nawapunth Manusitthipol
+ * @author Nawapunth Manusitthipol (https://github.com/NawaMan)
  **/
 public class TPCompiler implements RPCompiler, Serializable {
 	

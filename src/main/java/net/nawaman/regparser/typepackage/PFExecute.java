@@ -47,7 +47,7 @@ import net.nawaman.swing.text.HTMLOutputPane;
 /**
  * A call back class
  *
- * @author Nawapunth Manusitthipol
+ * @author Nawapunth Manusitthipol (https://github.com/NawaMan)
  **/
 interface ExecCallBack {
 	
@@ -60,7 +60,7 @@ interface ExecCallBack {
  * 
  * NOTE: Use out:PrintStream as the way to print out something to the result console.
  *
- * @author Nawapunth Manusitthipol
+ * @author Nawapunth Manusitthipol (https://github.com/NawaMan)
  */
 public class PFExecute extends javax.swing.JPanel {
 

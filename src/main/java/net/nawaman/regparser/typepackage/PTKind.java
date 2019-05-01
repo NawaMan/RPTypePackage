@@ -29,7 +29,7 @@ import net.nawaman.script.Signature;
 /**
  * Creates a PType from the spec
  *
- * @author Nawapunth Manusitthipol
+ * @author Nawapunth Manusitthipol (https://github.com/NawaMan)
  **/
 final public class PTKind implements Serializable {
 	

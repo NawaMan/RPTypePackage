@@ -31,7 +31,7 @@ import net.nawaman.regparser.Util;
  *      3.2 Line comment: Starts with /* and ends with * /
  *  4. The rest of the token types cannot be ambiguous with RegParser replaced code (those $$...$$ things). 
  *
- * @author Nawapunth Manusitthipol
+ * @author Nawapunth Manusitthipol (https://github.com/NawaMan)
  **/
 abstract public class CR_RegParser_JavaLiked extends CR_RegParser {
 	

@@ -69,7 +69,7 @@ import net.nawaman.util.UObject;
  * Parser Type Provider that holds holds the type definitions as string. The type definition is a string that can be
  *   handled like a program code.
  *
- * @author Nawapunth Manusitthipol
+ * @author Nawapunth Manusitthipol (https://github.com/NawaMan)
  **/
 public class PTypePackage implements PTypeProvider {
 

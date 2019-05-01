@@ -30,7 +30,7 @@ import net.nawaman.regparser.RegParser;
 /**
  * Code replacer for RegParser
  *
- * @author Nawapunth Manusitthipol
+ * @author Nawapunth Manusitthipol (https://github.com/NawaMan)
  **/
 abstract public class CR_RegParser extends CodeReplacer {
 

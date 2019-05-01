@@ -31,7 +31,7 @@ import net.nawaman.script.Signature;
 /**
  * RPVerifier from a function
  * 
- * @author Nawapunth Manusitthipol
+ * @author Nawapunth Manusitthipol (https://github.com/NawaMan)
  **/
 public class TPVerifier implements RPVerifier, Serializable {
 	

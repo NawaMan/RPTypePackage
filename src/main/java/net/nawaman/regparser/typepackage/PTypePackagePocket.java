@@ -40,7 +40,7 @@ import javax.swing.JOptionPane;
  * 
  * The pocket ensures that the error involving serialization is partly tolerated.  
  *
- * @author Nawapunth Manusitthipol
+ * @author Nawapunth Manusitthipol (https://github.com/NawaMan)
  */
 public class PTypePackagePocket implements PTypeProviderPocket {
 		

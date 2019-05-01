@@ -24,7 +24,7 @@ import net.nawaman.script.jsr223.JSEngine;
 /** 
  * Code replacer from JavaScript to RefParser
  * 
- * @author Nawapunth Manusitthipol
+ * @author Nawapunth Manusitthipol (https://github.com/NawaMan)
  **/
 public class RegParser2JavaScript extends CR_RegParser_JavaLiked {
 

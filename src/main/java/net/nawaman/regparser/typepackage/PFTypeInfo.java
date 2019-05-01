@@ -48,7 +48,7 @@ import net.nawaman.swing.LineNumberedTextComponentPanel;
 /**
  * Panel for TypeInfo editor
  *
- * @author Nawapunth Manusitthipol
+ * @author Nawapunth Manusitthipol (https://github.com/NawaMan)
  */
 public class PFTypeInfo extends javax.swing.JPanel {
 	

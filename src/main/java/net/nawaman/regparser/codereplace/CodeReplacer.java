@@ -28,7 +28,7 @@ import net.nawaman.script.ScriptManager;
 /**
  * Code replacer that makes writing functions for handling ParseReslt easy (such as compiler or verifier).
  *
- * @author Nawapunth Manusitthipol
+ * @author Nawapunth Manusitthipol (https://github.com/NawaMan)
  **/
 abstract public class CodeReplacer {
 	

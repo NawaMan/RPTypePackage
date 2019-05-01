@@ -33,7 +33,7 @@ import net.nawaman.script.Signature;
 /**
  * Parser Type that get its Checker from a function
  *
- * @author Nawapunth Manusitthipol
+ * @author Nawapunth Manusitthipol (https://github.com/NawaMan)
  **/
 public class TPGetChecker implements RPGetChecker, Serializable {
 	

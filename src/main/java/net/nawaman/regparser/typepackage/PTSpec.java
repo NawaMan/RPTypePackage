@@ -29,7 +29,7 @@ import net.nawaman.script.Scope;
 /**
  * Specification of parser type
  *
- * @author Nawapunth Manusitthipol
+ * @author Nawapunth Manusitthipol (https://github.com/NawaMan)
  **/
 public class PTSpec implements Scope, Serializable {
 	

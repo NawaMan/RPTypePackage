@@ -30,7 +30,7 @@ import sun.sdn.swing.treetable.TreeTableModel;
 /**
  * Tree-table model for displaying parse result
  *
- * @author Nawapunth Manusitthipol
+ * @author Nawapunth Manusitthipol (https://github.com/NawaMan)
  **/
 public class ParseResultTreeTableModel extends AbstractTreeTableModel implements
 		TreeTableModel {

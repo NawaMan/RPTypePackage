@@ -36,7 +36,7 @@ import net.nawaman.swing.text.HTMLOutputPane;
 /**
  * ParseResult Panel
  *
- * @author Nawapunth Manusitthipol
+ * @author Nawapunth Manusitthipol (https://github.com/NawaMan)
  */
 public class PFParseResult extends javax.swing.JPanel {
 	
