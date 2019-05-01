@@ -1,7 +1,7 @@
 /*
  * TypeFactory.java
  *
- * Created on June 22, 2008, 3:01 AM
+ * Created on June 22, 2008-2019, 3:01 AM
  */
 
 package net.nawaman.regparser.typepackage;
@@ -1339,7 +1339,7 @@ public class TypeFactory extends javax.swing.JFrame {
 		JOptionPane.showMessageDialog(
 						this,
 						"<html><center>"
-								+ "TypeFactory 1.0 (June 2008)<br/>"
+								+ "TypeFactory 1.0 (June 2008-2019)<br/>"
 								+ "<br/>"
 								+ "RegParser is a parser mechanism based on<br/>"
 								+ "Regular Expression implemented in Java.<br/>"
@@ -1351,7 +1351,7 @@ public class TypeFactory extends javax.swing.JFrame {
 								+ "and manipulating TypePackages.<br />"
 								+ "<br/>"
 								+ "<hr width='80%'>"
-								+ "Copyright (c) 2008: Nawapunth Manusitthipol&nbsp;&nbsp;&nbsp;&nbsp;<br/>"
+								+ "Copyright (c) 2008-2019: Nawapunth Manusitthipol&nbsp;&nbsp;&nbsp;&nbsp;<br/>"
 								+ "<br/>"
 								+ "<a href='http://nawa.pn-np.net/'>http://nawa.pn-np.net/</a><br/>"
 								+ "<br/>" + "</center>",

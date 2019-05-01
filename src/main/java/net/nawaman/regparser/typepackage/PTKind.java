@@ -1,5 +1,5 @@
 /*----------------------------------------------------------------------------------------------------------------------
- * Copyright (C) 2008 Nawapunth Manusitthipol. Implements with and for Sun Java 1.6 JDK.
+ * Copyright (C) 2008-2019 Nawapunth Manusitthipol. Implements with and for Sun Java 1.6 JDK.
  *----------------------------------------------------------------------------------------------------------------------
  * LICENSE:
  * 
