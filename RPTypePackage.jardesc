@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jardesc>
+    <jar path="/home/nawaman/Desktop/JavaTest/TypeFactory/ParserTypeFactory.jar"/>
+    <options buildIfNeeded="true" compress="true" descriptionLocation="/RPTypePackage/RPTypePackage.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="false" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+    <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
+    <selectedProjects/>
+    <manifest generateManifest="true" mainClassHandleIdentifier="=RPTypePackage/source&lt;net.nawaman.regparser.typepackage{TypeFactory.java[TypeFactory" manifestLocation="" manifestVersion="1.0" reuseManifest="false" saveManifest="false" usesManifest="true">
+        <sealing sealJar="true">
+            <packagesToSeal/>
+            <packagesToUnSeal/>
+        </sealing>
+    </manifest>
+    <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
+        <javaElement handleIdentifier="=Libraries/source&lt;sun.sdn.swing.treetable"/>
+        <javaElement handleIdentifier="=RegParser/source&lt;net.nawaman.regparser.parsers"/>
+        <javaElement handleIdentifier="=JavaCompiler/source"/>
+        <javaElement handleIdentifier="=RPTypePackage/source"/>
+        <javaElement handleIdentifier="=SimpleScript/source"/>
+        <javaElement handleIdentifier="=NawaUtils/source&lt;net.nawaman.io"/>
+        <javaElement handleIdentifier="=SimpleConsole/source"/>
+        <javaElement handleIdentifier="=RegParser/source&lt;net.nawaman.regparser.swing"/>
+        <javaElement handleIdentifier="=RegParser/source&lt;net.nawaman.regparser"/>
+        <javaElement handleIdentifier="=NawaUtils/source&lt;net.nawaman.swing"/>
+    </selectedElements>
+    <fatjar builder="org.eclipse.jdt.ui.plain_jar_builder" launchConfig=""/>
+</jardesc>
