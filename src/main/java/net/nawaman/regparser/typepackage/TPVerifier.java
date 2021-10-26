@@ -22,7 +22,7 @@ import java.io.Serializable;
 
 import net.nawaman.regparser.PTypeProvider;
 import net.nawaman.regparser.ParseResult;
-import net.nawaman.regparser.RPVerifier;
+import net.nawaman.regparser.ResultVerifier;
 import net.nawaman.script.CompileOption;
 import net.nawaman.script.Function;
 import net.nawaman.script.ProblemContainer;
@@ -33,9 +33,11 @@ import net.nawaman.script.Signature;
  * 
  * @author Nawapunth Manusitthipol (https://github.com/NawaMan)
  **/
-public class TPVerifier implements RPVerifier, Serializable {
+public class TPVerifier implements ResultVerifier, Serializable {
 	
-	/** Signature for the verifier function */
+    private static final long serialVersionUID = -5340640272559550203L;
+
+    /** Signature for the verifier function */
 	static public final Signature SVerifier = new Signature.Simple("Verifier", Boolean.class, false,
 							PTypePackage.class,
 							ParseResult.class,

@@ -37,7 +37,9 @@ import net.nawaman.script.Signature;
  **/
 public class TPGetChecker implements RPGetChecker, Serializable {
 	
-	/** Signature for the getChecker function */
+    private static final long serialVersionUID = 831095862697228605L;
+
+    /** Signature for the getChecker function */
 	static public final Signature SGetChecker = new Signature.Simple("GetChecker", Object.class, false,
 							PTypePackage.class,
 							ParseResult.class,

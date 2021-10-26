@@ -35,14 +35,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.TreeMap;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.Vector;
 
-import net.nawaman.javacompiler.JavaCompilerObjectInputStream;
 import net.nawaman.javacompiler.JavaCompiler;
-import net.nawaman.regparser.PTComposable;
-import net.nawaman.regparser.PTSimple;
+import net.nawaman.javacompiler.JavaCompilerObjectInputStream;
 import net.nawaman.regparser.PType;
 import net.nawaman.regparser.PTypeProvider;
 import net.nawaman.regparser.PTypeProviderPocket;
@@ -54,6 +52,8 @@ import net.nawaman.regparser.codereplace.CodeReplacer;
 import net.nawaman.regparser.codereplace.RegParser2Java;
 import net.nawaman.regparser.codereplace.RegParser2JavaScript;
 import net.nawaman.regparser.typepackage.PTKind.Data;
+import net.nawaman.regparser.types.PTComposable;
+import net.nawaman.regparser.types.PTSimple;
 import net.nawaman.script.CompileOption;
 import net.nawaman.script.Function;
 import net.nawaman.script.ProblemContainer;
@@ -222,7 +222,8 @@ public class PTypePackage implements PTypeProvider {
 		"#Constructor:\n"+
 		"	// @Java:\n"+
 		"	import net.nawaman.regparser.*;\n"+
-		"	import net.nawaman.regparser.typepackage.*;\n"+
+		"	import net.nawaman.regparser.types.*;\n"+
+        "   import net.nawaman.regparser.typepackage.*;\n"+
 		"	\n"+
 		"	String Name    = (String)$Spec.getValue(\"Name\");\n"+
 		"	String Checker = (String)$Spec.getValue(\""+PropCheckerName+"\");\n" +
@@ -449,7 +450,7 @@ public class PTypePackage implements PTypeProvider {
 		if((this.ErrorMsgs != null) && (this.ErrorMsgs.containsKey(pErrName))) return false;
 		
 		if(this.ErrorMsgs == null) this.ErrorMsgs = new TreeMap<String, String>();
-		this.ErrorMsgs.remove(ErrorMsgs);
+		this.ErrorMsgs.remove(pErrName);
 		return true;
 	}
 	

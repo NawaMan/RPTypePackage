@@ -44,7 +44,9 @@ import javax.swing.JOptionPane;
  */
 public class PTypePackagePocket implements PTypeProviderPocket {
 		
-	public PTypePackagePocket(PTypePackage pTPackage) {
+    private static final long serialVersionUID = 4618370349942176817L;
+
+    public PTypePackagePocket(PTypePackage pTPackage) {
 		this.TPackage = pTPackage;
 	}
 		

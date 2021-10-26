@@ -36,7 +36,9 @@ import net.nawaman.script.Signature;
  **/
 public class TPCompiler implements RPCompiler, Serializable {
 	
-	/** Signature for the compiler function */
+    private static final long serialVersionUID = 7469878423176589404L;
+
+    /** Signature for the compiler function */
 	static public final Signature SCompiler = new Signature.Simple("Compiler", Object.class, false,
 							PTypePackage.class,
 							ParseResult.class,

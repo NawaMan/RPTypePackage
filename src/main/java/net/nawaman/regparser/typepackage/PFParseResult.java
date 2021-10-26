@@ -40,7 +40,9 @@ import net.nawaman.swing.text.HTMLOutputPane;
  */
 public class PFParseResult extends javax.swing.JPanel {
 	
-	/** Creates new form PFParseResult */
+    private static final long serialVersionUID = 6662165972907141490L;
+
+    /** Creates new form PFParseResult */
 	public PFParseResult(TypeFactory pTFactory) {
 		this(pTFactory, null, null);
 	}

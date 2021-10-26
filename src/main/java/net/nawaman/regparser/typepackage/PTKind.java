@@ -33,7 +33,9 @@ import net.nawaman.script.Signature;
  **/
 final public class PTKind implements Serializable {
 	
-	/** The default name of the parameter PTPackage (The first param of the type constructor) */
+    private static final long serialVersionUID = 2984929681138996368L;
+    
+    /** The default name of the parameter PTPackage (The first param of the type constructor) */
 	static public final String DefaultParamName_PTPackage  = "$TPackage";
 	/**
 	 * The default name of the parameter SpecData
@@ -252,7 +254,9 @@ final public class PTKind implements Serializable {
 	/** The data object for saving and loading PTypeKind */
 	static final public class Data implements Serializable {
 		
-		Data(String pName, String[] pDataNames, String pTypeCode) {
+        private static final long serialVersionUID = -7182757944647951764L;
+
+        Data(String pName, String[] pDataNames, String pTypeCode) {
 			this.Name      = pName;
 			this.DataNames = pDataNames.clone();
 			this.TypeCode  = pTypeCode;

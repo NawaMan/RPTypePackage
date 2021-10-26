@@ -167,7 +167,9 @@ public class TPackageScriptEngine extends ScriptEngine.Simple {
 	/** A simulation function to hold the PTypePackage */
 	static protected class GetTypePackageFunction implements Function {
 		
-		protected GetTypePackageFunction(PTypePackage pTPackage) {
+        private static final long serialVersionUID = -6766703293542983777L;
+
+        protected GetTypePackageFunction(PTypePackage pTPackage) {
 			this.TPackage = pTPackage;
 		}
 		

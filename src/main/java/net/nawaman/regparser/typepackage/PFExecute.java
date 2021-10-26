@@ -64,7 +64,9 @@ interface ExecCallBack {
  */
 public class PFExecute extends javax.swing.JPanel {
 
-	final ExecCallBack DoNothing = new ExecCallBack() { public void setResult(String pCode, Object pResult) {} };
+    private static final long serialVersionUID = 6346684434877160060L;
+    
+    final ExecCallBack DoNothing = new ExecCallBack() { public void setResult(String pCode, Object pResult) {} };
 	
 	/** Creates new form PFMainScope */
 	public PFExecute() {

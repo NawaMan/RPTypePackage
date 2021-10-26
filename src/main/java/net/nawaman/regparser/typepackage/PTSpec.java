@@ -33,7 +33,9 @@ import net.nawaman.script.Scope;
  **/
 public class PTSpec implements Scope, Serializable {
 	
-	/** Field name of the field `Name` */
+    private static final long serialVersionUID = -8315783595715374142L;
+    
+    /** Field name of the field `Name` */
 	static public final String FN_Name = "Name";
 	/** Field name of the field `Kind` */
 	static public final String FN_Kind = "Kind";

@@ -151,7 +151,9 @@ public class ParseResultTreeTableModel extends AbstractTreeTableModel implements
 	/** TreeTable for displaying ParseResult */
 	static public class JParseResultTreeTable extends JTreeTable {
 
-		public JParseResultTreeTable() {
+        private static final long serialVersionUID = 2939683204561587535L;
+        
+        public JParseResultTreeTable() {
 			super(new ParseResultTreeTableModel(null));
 		}
 		public JParseResultTreeTable(ParseResult pResult) {
