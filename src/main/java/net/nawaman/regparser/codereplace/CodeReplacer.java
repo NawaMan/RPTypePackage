@@ -20,7 +20,7 @@ package net.nawaman.regparser.codereplace;
 
 import java.util.HashMap;
 
-import net.nawaman.regparser.ParseResult;
+import net.nawaman.regparser.result.ParseResult;
 import net.nawaman.script.Scope;
 import net.nawaman.script.ScriptEngine;
 import net.nawaman.script.ScriptManager;
@@ -252,17 +252,17 @@ abstract public class CodeReplacer {
 		
 		if(pThisResultName != null) {
 			// Add the original text
-			Result.append(this.getNew(String.class, VNAME_OrgText, this.getCall(this.getVar(pThisResultName), "getOriginalString")));
+			Result.append(this.getNew(String.class, VNAME_OrgText, this.getCall(this.getVar(pThisResultName), "originalString")));
 
 			String EIndexName = (pParams == null)?null:pParams.get("EntryIndex");
 			if(EIndexName == null) {
 				// Add Text Parse result and Sub Parse result
-				Result.append(this.getNew(String     .class, VNAME_Text,   this.getCall(this.getVar(pThisResultName), "getText")));
+				Result.append(this.getNew(String     .class, VNAME_Text,   this.getCall(this.getVar(pThisResultName), "text")));
 				Result.append(this.getNew(ParseResult.class, VNAME_Result, this.getNull()));
 			} else {
 				// Add Text Parse result and Sub Parse result
-				Result.append(this.getNew(String     .class, VNAME_Text,   this.getCall(this.getVar(pThisResultName), "getTextOf", this.getVar(EIndexName))));
-				Result.append(this.getNew(ParseResult.class, VNAME_Result, this.getCall(this.getVar(pThisResultName), "getSubOf",  this.getVar(EIndexName))));
+				Result.append(this.getNew(String     .class, VNAME_Text,   this.getCall(this.getVar(pThisResultName), "textOf", this.getVar(EIndexName))));
+				Result.append(this.getNew(ParseResult.class, VNAME_Result, this.getCall(this.getVar(pThisResultName), "subOf",  this.getVar(EIndexName))));
 			}
 		}
 

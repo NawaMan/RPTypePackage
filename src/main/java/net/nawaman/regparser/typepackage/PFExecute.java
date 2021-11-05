@@ -303,7 +303,7 @@ public class PFExecute extends javax.swing.JPanel {
 				"#Compiler:\n" +
 				"	// @RegParser(Java):\n" +
 				"	StringBuffer SB = new StringBuffer();\n" +
-				"	for(int i = 0; i < $Result.count(); i++) {\n" +
+				"	for(int i = 0; i < $Result.entryCount(); i++) {\n" +
 				"		String Name = ~~[i]~~;\n" +
 				"		if(\"$NewLine\".equals(Name))    SB.append(\"<br>\\n\");\n" +
 				"		else if(\"$Tab\".equals(Name))   SB.append(\"&nbsp;&nbsp;&nbsp;&nbsp;\");\n" +

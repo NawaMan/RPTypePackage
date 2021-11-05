@@ -44,13 +44,13 @@ import net.nawaman.javacompiler.JavaCompilerObjectInputStream;
 import net.nawaman.regparser.PType;
 import net.nawaman.regparser.PTypeProvider;
 import net.nawaman.regparser.PTypeProviderPocket;
-import net.nawaman.regparser.ParseResult;
 import net.nawaman.regparser.RPGetChecker;
 import net.nawaman.regparser.RegParser;
 import net.nawaman.regparser.Util;
 import net.nawaman.regparser.codereplace.CodeReplacer;
 import net.nawaman.regparser.codereplace.RegParser2Java;
 import net.nawaman.regparser.codereplace.RegParser2JavaScript;
+import net.nawaman.regparser.result.ParseResult;
 import net.nawaman.regparser.typepackage.PTKind.Data;
 import net.nawaman.regparser.types.PTComposable;
 import net.nawaman.regparser.types.PTSimple;
@@ -501,14 +501,14 @@ public class PTypePackage implements PTypeProvider {
 		if(pType == null) return false;
 		
 		// Checks in Type Spec
-		if((this.TSpecs   != null) && this.TSpecs.containsKey(pType.getName()))
-			throw new RuntimeException("Add Type Error: The given type `"+pType.getName()+"` is already exist in this package.");
+		if((this.TSpecs   != null) && this.TSpecs.containsKey(pType.name()))
+			throw new RuntimeException("Add Type Error: The given type `"+pType.name()+"` is already exist in this package.");
 		// Checks in Native type
-		if((this.PNTypes != null) && this.PNTypes.containsKey(pType.getName()))
-			throw new RuntimeException("Add Type Error: The given type `"+pType.getName()+"` is already exist in this package.");
+		if((this.PNTypes != null) && this.PNTypes.containsKey(pType.name()))
+			throw new RuntimeException("Add Type Error: The given type `"+pType.name()+"` is already exist in this package.");
 		
 		if(this.PNTypes == null) this.PNTypes = new TreeMap<String, PType>();
-		this.PNTypes.put(pType.getName(), pType);
+		this.PNTypes.put(pType.name(), pType);
 		return true;
 	}
 	/** Add type from type spec */
@@ -611,7 +611,7 @@ public class PTypePackage implements PTypeProvider {
 	/** Returns the string representation of a spec type */
 	public String getTypeToString(PType pType) {
 		if(pType == null) return null;
-		PTSpec Spec = this.getTheTypeSpec(pType.getName());
+		PTSpec Spec = this.getTheTypeSpec(pType.name());
 		if(Spec == null) return pType.toString();
 		
 		StringBuffer ToString = new StringBuffer();

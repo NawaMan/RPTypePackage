@@ -23,9 +23,9 @@ import java.util.HashMap;
 import net.nawaman.regparser.CompilationContext;
 import net.nawaman.regparser.PType;
 import net.nawaman.regparser.PTypeProvider;
-import net.nawaman.regparser.ParseResult;
 import net.nawaman.regparser.RPCompiler;
 import net.nawaman.regparser.RegParser;
+import net.nawaman.regparser.result.ParseResult;
 
 /**
  * Code replacer for RegParser
@@ -106,7 +106,7 @@ abstract public class CR_RegParser extends CodeReplacer {
 			new RPCompiler() {
 				public Object compile(ParseResult $ThisResult, int $EIndex, String pParam, CompilationContext pContext,
 						PTypeProvider $Provider) {
-					ParseResult $Result = $ThisResult.getSubOf($EIndex);
+					ParseResult $Result = $ThisResult.subResultAt($EIndex);
 					if($Result == null) {
 						String T = $ThisResult.textOf($EIndex);
 						((CContext)pContext).SB.append(T);
@@ -125,6 +125,10 @@ abstract public class CR_RegParser extends CodeReplacer {
 					boolean IsMultiple = Name.endsWith("*");                   if(IsMultiple) Name = Name.substring(0, Name.length() - 1);
 					String  ResultName = IsLink?"":CodeReplacer.VNAME_Result;
 					StringBuilder SB   = ((CContext)pContext).SB;
+					
+					if (IsLink) {
+					    System.out.println();
+					}
 					
 					boolean IsIndex = Name.startsWith("[");
 					if(IsIndex) Name = Name.substring(1, Name.length() - 1);
@@ -168,7 +172,7 @@ abstract public class CR_RegParser extends CodeReplacer {
 				public Object compile(ParseResult $ThisResult, int $EIndex, String pParam, CompilationContext pContext,
 						PTypeProvider $Provider) {
 					
-					ParseResult $Result = $ThisResult.getSubOf($EIndex);
+					ParseResult $Result = $ThisResult.subResultAt($EIndex);
 					if($Result == null) {
 						String T = $ThisResult.textOf($EIndex);
 						((CContext)pContext).SB.append(T);
@@ -176,7 +180,7 @@ abstract public class CR_RegParser extends CodeReplacer {
 					}
 					
 					StringBuilder SB = new StringBuilder();
-					int Count = $Result.count();
+					int Count = $Result.entryCount();
 					for(int i = 0; i < Count; i++) {
 						if(PT_ToBeReplaced.equals($Result.typeNameOf(i))) {
 							Object O = $Result.valueOf(i, $Provider, pContext);

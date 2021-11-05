@@ -21,8 +21,8 @@ package net.nawaman.regparser.typepackage;
 import java.io.Serializable;
 
 import net.nawaman.regparser.PTypeProvider;
-import net.nawaman.regparser.ParseResult;
 import net.nawaman.regparser.ResultVerifier;
+import net.nawaman.regparser.result.ParseResult;
 import net.nawaman.script.CompileOption;
 import net.nawaman.script.Function;
 import net.nawaman.script.ProblemContainer;

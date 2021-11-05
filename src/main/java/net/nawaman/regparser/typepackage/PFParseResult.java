@@ -26,9 +26,9 @@ import java.io.PrintStream;
 import javax.swing.JOptionPane;
 import net.nawaman.regparser.PType;
 import net.nawaman.regparser.PTypeRef;
-import net.nawaman.regparser.ParseResult;
 import net.nawaman.regparser.Quantifier;
 import net.nawaman.regparser.RegParser;
+import net.nawaman.regparser.result.ParseResult;
 import net.nawaman.regparser.swing.ParseResultTreeTableModel.JParseResultTreeTable;
 import net.nawaman.swing.LineNumberedTextComponentPanel;
 import net.nawaman.swing.text.HTMLOutputPane;
@@ -58,11 +58,11 @@ public class PFParseResult extends javax.swing.JPanel {
 		
 		this.TFactory = pTFactory;
 		
-		if((pRegParser != null) && (pRegParser.getEntryCount() == 1) && (pRegParser.getEntryAt(0).getTypeRef() != null)
+		if((pRegParser != null) && (pRegParser.getEntryCount() == 1) && (pRegParser.getEntryAt(0).typeRef() != null)
 				&& (pRegParser.getEntryAt(0).getQuantifier() == Quantifier.One)) {
-			PTypeRef TRef = pRegParser.getEntryAt(0).getTypeRef();
-			this.TypeName  = TRef.getName();
-			this.TypeParam = TRef.getParam();
+			PTypeRef TRef = pRegParser.getEntryAt(0).typeRef();
+			this.TypeName  = TRef.name();
+			this.TypeParam = TRef.parameter();
 		}
 		
 		if(this.TypeName != null) {	// Given the type name - so it is a type parsing (can compile)
@@ -132,7 +132,7 @@ public class PFParseResult extends javax.swing.JPanel {
 		else {
 			this.TA_ParseResultAsText.setText(this.PResult.toString());
 			this.LNP_OriginalText.getTextComponent().setSelectionStart(0);
-			this.LNP_OriginalText.getTextComponent().setSelectionEnd(this.PResult.getEndPosition());
+			this.LNP_OriginalText.getTextComponent().setSelectionEnd(this.PResult.endPosition());
 		}
 	}
 	

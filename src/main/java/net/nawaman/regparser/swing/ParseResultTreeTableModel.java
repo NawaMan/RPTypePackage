@@ -20,9 +20,8 @@ package net.nawaman.regparser.swing;
 
 import java.util.Hashtable;
 
-import net.nawaman.regparser.ParseResult;
 import net.nawaman.regparser.Util;
-
+import net.nawaman.regparser.result.ParseResult;
 import sun.sdn.swing.treetable.AbstractTreeTableModel;
 import sun.sdn.swing.treetable.JTreeTable;
 import sun.sdn.swing.treetable.TreeTableModel;
@@ -58,7 +57,7 @@ public class ParseResultTreeTableModel extends AbstractTreeTableModel implements
 		}
 		@Override public String toString() {
 			if(this.Result == null) return "<NO RESULT>";
-			String Text = Util.escapeText((this.EIndex == -1)?this.Result.getText():this.Result.getTextOf(this.EIndex)).toString();
+			String Text = Util.escapeText((this.EIndex == -1)?this.Result.text():this.Result.textAt(this.EIndex)).toString();
 			if(Text.length() >= 50) Text = Text.substring(0, 47) + "...";
 			String Order = ((this.EIndex == -1)?"":"" + this.EIndex);
 			while(Order.length() < 2) Order = "0" + Order;
@@ -83,8 +82,8 @@ public class ParseResultTreeTableModel extends AbstractTreeTableModel implements
 	@Override public int getChildCount(Object node) {
 		ParseResultTreeNode Node = (ParseResultTreeNode)node;
 		if(Node.Result == null) return 0;
-		if(Node.EIndex == -1)   return Node.Result.getResultEntryCount();
-		return Node.Result.getSubOf(Node.EIndex).getResultEntryCount();
+		if(Node.EIndex == -1)   return Node.Result.entryCount();
+		return Node.Result.subResultAt(Node.EIndex).entryCount();
 	}
 
 	/** Returns the child of the node at the index i */
@@ -92,7 +91,7 @@ public class ParseResultTreeTableModel extends AbstractTreeTableModel implements
 		ParseResultTreeNode Node = (ParseResultTreeNode)node;
 		if(Node.Result == null) return null;
 		if(Node.EIndex == -1) return ParseResultTreeNode.getNode(Node.Result, i);
-		return ParseResultTreeNode.getNode(Node.Result.getSubOf(Node.EIndex), i);
+		return ParseResultTreeNode.getNode(Node.Result.subResultAt(Node.EIndex), i);
 	}
 
 	// The superclass's implementation would work, but this is more efficient.
@@ -101,7 +100,7 @@ public class ParseResultTreeTableModel extends AbstractTreeTableModel implements
 		ParseResultTreeNode Node = (ParseResultTreeNode)node;
 		if(Node.Result == null) return  true;
 		if(Node.EIndex == -1)   return false;
-		return !Node.Result.getResultEntryAt(Node.EIndex).hasSubResult();
+		return !Node.Result.entryAt(Node.EIndex).hasSubResult();
 	}
 
 	// The TreeTableNode interface. ------------------------------------------------------------------------------------
@@ -117,7 +116,7 @@ public class ParseResultTreeTableModel extends AbstractTreeTableModel implements
 			ParseResult PR = Node.Result;
 			switch (column) {
 				case 0:
-					String Text = Util.escapeText(PR.getText()).toString();
+					String Text = Util.escapeText(PR.text()).toString();
 					if(Text.length() >= 50) Text = Text.substring(0, 47) + "...";
 					return Text;
 				case 1:
@@ -125,23 +124,23 @@ public class ParseResultTreeTableModel extends AbstractTreeTableModel implements
 				case 2:
 					return "<No Type>";
 				case 3:
-					return String.format("[%4d-%4d]", PR.getStartPosition(), PR.getEndPosition());
+					return String.format("[%4d-%4d]", PR.startPosition(), PR.endPosition());
 			}
 		} else {
-			ParseResult.Entry PRE = Node.Result.getResultEntryAt(Node.EIndex);
+		    var PRE = Node.Result.entryAt(Node.EIndex);
 			switch (column) {
 				case 0:
-					String Text = Util.escapeText(Node.Result.getTextOf(Node.EIndex)).toString();
+					String Text = Util.escapeText(Node.Result.textAt(Node.EIndex)).toString();
 					if(Text.length() >= 50) Text = Text.substring(0, 47) + "...";
 					return Text;
 				case 1:
-					String N = PRE.getName();
+					String N = PRE.name();
 					return (N == null)?"<No Name>":N;
 				case 2:
-					String TN = PRE.getTypeName();
+					String TN = PRE.typeName();
 					return (TN == null)?"<No Type>":TN;
 				case 3:
-					return String.format("[%4d-%4d]", Node.Result.getStartPositionOf(Node.EIndex), Node.Result.getEndPositionOf(Node.EIndex));
+					return String.format("[%4d-%4d]", Node.Result.startPositionAt(Node.EIndex), Node.Result.endPositionAt(Node.EIndex));
 			}
 		}
 
