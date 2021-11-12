@@ -252,7 +252,7 @@ abstract public class CodeReplacer {
 		
 		if(pThisResultName != null) {
 			// Add the original text
-			Result.append(this.getNew(String.class, VNAME_OrgText, this.getCall(this.getVar(pThisResultName), "originalString")));
+			Result.append(this.getNew(String.class, VNAME_OrgText, this.getCall(this.getVar(pThisResultName), "originalText")));
 
 			String EIndexName = (pParams == null)?null:pParams.get("EntryIndex");
 			if(EIndexName == null) {
@@ -261,8 +261,8 @@ abstract public class CodeReplacer {
 				Result.append(this.getNew(ParseResult.class, VNAME_Result, this.getNull()));
 			} else {
 				// Add Text Parse result and Sub Parse result
-				Result.append(this.getNew(String     .class, VNAME_Text,   this.getCall(this.getVar(pThisResultName), "textOf", this.getVar(EIndexName))));
-				Result.append(this.getNew(ParseResult.class, VNAME_Result, this.getCall(this.getVar(pThisResultName), "subOf",  this.getVar(EIndexName))));
+				Result.append(this.getNew(String     .class, VNAME_Text,   this.getCall(this.getVar(pThisResultName), "textOf",      this.getVar(EIndexName))));
+				Result.append(this.getNew(ParseResult.class, VNAME_Result, this.getCall(this.getVar(pThisResultName), "subResultOf", this.getVar(EIndexName))));
 			}
 		}
 
@@ -309,19 +309,19 @@ abstract public class CodeReplacer {
 	//	SB = StringBuilder
 	
 	/** Replace text */
-	final public String replaceForText(      String RN, boolean IM, String EN, StringBuilder SB) { return this.rS(RN, IM, EN, "text",       SB); }
+	final public String replaceForText      (String RN, boolean IM, String EN, StringBuilder SB) { return this.rS(RN, IM, EN, "text",          SB); }
 	/** Replace name */
-	final public String replaceForName(      String RN, boolean IM, String EN, StringBuilder SB) { return this.rS(RN, IM, EN, "name",       SB); }
+	final public String replaceForName      (String RN, boolean IM, String EN, StringBuilder SB) { return this.rS(RN, IM, EN, "name",          SB); }
 	/** Replace sub */
-	final public String replaceForSub(       String RN, boolean IM, String EN, StringBuilder SB) { return this.rS(RN, IM, EN,  "sub",       SB); }
+	final public String replaceForSub       (String RN, boolean IM, String EN, StringBuilder SB) { return this.rS(RN, IM, EN,  "subResult",    SB); }
 	/** Replace type name */
-	final public String replaceForTypeName(  String RN, boolean IM, String EN, StringBuilder SB) { return this.rS(RN, IM, EN, "typeName",   SB); }
+	final public String replaceForTypeName  (String RN, boolean IM, String EN, StringBuilder SB) { return this.rS(RN, IM, EN, "typeName",      SB); }
 	/** Replace (col,row) */
-	final public String replaceForLocationCR(String RN, boolean IM, String EN, StringBuilder SB) { return this.rS(RN, IM, EN, "locationCR", SB); }
+	final public String replaceForCoordinate(String RN, boolean IM, String EN, StringBuilder SB) { return this.rS(RN, IM, EN, "coordinate",    SB); }
 	/** Replace location */
-	final public String replaceForLocation(  String RN, boolean IM, String EN, StringBuilder SB) { return this.rS(RN, IM, EN, "location",   SB); }
+	final public String replaceForLocation  (String RN, boolean IM, String EN, StringBuilder SB) { return this.rS(RN, IM, EN, "location",      SB); }
 	/** Replace position */
-	final public String replaceForPosition(  String RN, boolean IM, String EN, StringBuilder SB) { return this.rS(RN, IM, EN, "pos",        SB); }
+	final public String replaceForPosition  (String RN, boolean IM, String EN, StringBuilder SB) { return this.rS(RN, IM, EN, "startPosition", SB); }
 
 	/** Replace type */
 	final public String replaceForType(String TypePackageName, String ResultName, boolean IsMultiple,

@@ -106,7 +106,7 @@ abstract public class CR_RegParser extends CodeReplacer {
 			new RPCompiler() {
 				public Object compile(ParseResult $ThisResult, int $EIndex, String pParam, CompilationContext pContext,
 						PTypeProvider $Provider) {
-					ParseResult $Result = $ThisResult.subResultAt($EIndex);
+					ParseResult $Result = $ThisResult.subResultOf($EIndex);
 					if($Result == null) {
 						String T = $ThisResult.textOf($EIndex);
 						((CContext)pContext).SB.append(T);
@@ -139,7 +139,7 @@ abstract public class CR_RegParser extends CodeReplacer {
 						case '$': return This.replaceForText(      ResultName, IsMultiple, Name, SB);
 						case '~': return This.replaceForName(      ResultName, IsMultiple, Name, SB);
 						case '*': return This.replaceForTypeName(  ResultName, IsMultiple, Name, SB);
-						case '&': return This.replaceForLocationCR(ResultName, IsMultiple, Name, SB);
+						case '&': return This.replaceForCoordinate(ResultName, IsMultiple, Name, SB);
 						case '^': return This.replaceForLocation(  ResultName, IsMultiple, Name, SB);
 						case ':': return This.replaceForPosition(  ResultName, IsMultiple, Name, SB);
 						case '#': return This.replaceForSub(       ResultName, IsMultiple, Name, SB);
@@ -172,7 +172,7 @@ abstract public class CR_RegParser extends CodeReplacer {
 				public Object compile(ParseResult $ThisResult, int $EIndex, String pParam, CompilationContext pContext,
 						PTypeProvider $Provider) {
 					
-					ParseResult $Result = $ThisResult.subResultAt($EIndex);
+					ParseResult $Result = $ThisResult.subResultOf($EIndex);
 					if($Result == null) {
 						String T = $ThisResult.textOf($EIndex);
 						((CContext)pContext).SB.append(T);

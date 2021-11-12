@@ -57,7 +57,7 @@ public class ParseResultTreeTableModel extends AbstractTreeTableModel implements
 		}
 		@Override public String toString() {
 			if(this.Result == null) return "<NO RESULT>";
-			String Text = Util.escapeText((this.EIndex == -1)?this.Result.text():this.Result.textAt(this.EIndex)).toString();
+			String Text = Util.escapeText((this.EIndex == -1)?this.Result.text():this.Result.textOf(this.EIndex)).toString();
 			if(Text.length() >= 50) Text = Text.substring(0, 47) + "...";
 			String Order = ((this.EIndex == -1)?"":"" + this.EIndex);
 			while(Order.length() < 2) Order = "0" + Order;
@@ -83,7 +83,7 @@ public class ParseResultTreeTableModel extends AbstractTreeTableModel implements
 		ParseResultTreeNode Node = (ParseResultTreeNode)node;
 		if(Node.Result == null) return 0;
 		if(Node.EIndex == -1)   return Node.Result.entryCount();
-		return Node.Result.subResultAt(Node.EIndex).entryCount();
+		return Node.Result.subResultOf(Node.EIndex).entryCount();
 	}
 
 	/** Returns the child of the node at the index i */
@@ -91,7 +91,7 @@ public class ParseResultTreeTableModel extends AbstractTreeTableModel implements
 		ParseResultTreeNode Node = (ParseResultTreeNode)node;
 		if(Node.Result == null) return null;
 		if(Node.EIndex == -1) return ParseResultTreeNode.getNode(Node.Result, i);
-		return ParseResultTreeNode.getNode(Node.Result.subResultAt(Node.EIndex), i);
+		return ParseResultTreeNode.getNode(Node.Result.subResultOf(Node.EIndex), i);
 	}
 
 	// The superclass's implementation would work, but this is more efficient.
@@ -130,7 +130,7 @@ public class ParseResultTreeTableModel extends AbstractTreeTableModel implements
 		    var PRE = Node.Result.entryAt(Node.EIndex);
 			switch (column) {
 				case 0:
-					String Text = Util.escapeText(Node.Result.textAt(Node.EIndex)).toString();
+					String Text = Util.escapeText(Node.Result.textOf(Node.EIndex)).toString();
 					if(Text.length() >= 50) Text = Text.substring(0, 47) + "...";
 					return Text;
 				case 1:
@@ -140,7 +140,7 @@ public class ParseResultTreeTableModel extends AbstractTreeTableModel implements
 					String TN = PRE.typeName();
 					return (TN == null)?"<No Type>":TN;
 				case 3:
-					return String.format("[%4d-%4d]", Node.Result.startPositionAt(Node.EIndex), Node.Result.endPositionAt(Node.EIndex));
+					return String.format("[%4d-%4d]", Node.Result.startPositionOf(Node.EIndex), Node.Result.endPositionOf(Node.EIndex));
 			}
 		}
 
