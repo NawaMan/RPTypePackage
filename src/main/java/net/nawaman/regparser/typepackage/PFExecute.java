@@ -35,7 +35,7 @@ import javax.swing.text.Element;
 import javax.swing.text.JTextComponent;
 
 import net.nawaman.regparser.CompilationContext;
-import net.nawaman.regparser.PType;
+import net.nawaman.regparser.ParserType;
 import net.nawaman.script.Function;
 import net.nawaman.script.ProblemContainer;
 import net.nawaman.script.ScriptEngine;
@@ -319,13 +319,13 @@ public class PFExecute extends javax.swing.JPanel {
 				"\n"+
 				"#end def parser;";
 	
-	static PType LocationFinder = null;
+	static ParserType LocationFinder = null;
 	
-	static PType getLocationFinder() {
+	static ParserType getLocationFinder() {
 		if(LocationFinder == null) {
 			PTypePackage PTP = new PTypePackage();
 			PTP.useCommonKinds();
-			LocationFinder = PTP.getType(PTP.addType(LocationFinderSpec));
+			LocationFinder = PTP.type(PTP.addType(LocationFinderSpec));
 		}
 		return LocationFinder;
 	}

@@ -21,9 +21,9 @@ package net.nawaman.regparser.typepackage;
 import java.io.Serializable;
 
 import net.nawaman.regparser.CompilationContext;
-import net.nawaman.regparser.PTypeProvider;
-import net.nawaman.regparser.RPCompiler;
+import net.nawaman.regparser.ParserTypeProvider;
 import net.nawaman.regparser.result.ParseResult;
+import net.nawaman.regparser.types.ResultCompiler;
 import net.nawaman.script.CompileOption;
 import net.nawaman.script.Function;
 import net.nawaman.script.ProblemContainer;
@@ -34,7 +34,7 @@ import net.nawaman.script.Signature;
  *
  * @author Nawapunth Manusitthipol (https://github.com/NawaMan)
  **/
-public class TPCompiler implements RPCompiler, Serializable {
+public class TPCompiler implements ResultCompiler, Serializable {
 	
     private static final long serialVersionUID = 7469878423176589404L;
 
@@ -45,7 +45,7 @@ public class TPCompiler implements RPCompiler, Serializable {
 							Integer.class,
 							String.class,
 							CompilationContext.class,
-							PTypeProvider.class
+							ParserTypeProvider.class
 						);
 
 	static public final String PNTypePackage        = "$TPackage";
@@ -83,8 +83,8 @@ public class TPCompiler implements RPCompiler, Serializable {
 	
 	/** Compiles a ParseResult in to an object with a parameter */
 	public Object compile(ParseResult pThisResult, int pEntryIndex, String pParam, CompilationContext pContext,
-			PTypeProvider pProvider) {
-		PTypeProvider TP = PTypeProvider.Library.getEither(this.TypePackage, pProvider);
+			ParserTypeProvider pProvider) {
+		ParserTypeProvider TP = ParserTypeProvider.Library.either(this.TypePackage, pProvider);
 		return this.CompileFunction.run(this.TypePackage, pThisResult, pEntryIndex, pParam, pContext, TP);
 	}
 }

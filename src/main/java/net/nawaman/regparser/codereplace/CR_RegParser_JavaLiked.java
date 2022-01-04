@@ -18,7 +18,7 @@
 
 package net.nawaman.regparser.codereplace;
 
-import net.nawaman.regparser.Util;
+import net.nawaman.regparser.utils.Util;
 
 /**
  * Code replacer for RegParser to a Java liked language.

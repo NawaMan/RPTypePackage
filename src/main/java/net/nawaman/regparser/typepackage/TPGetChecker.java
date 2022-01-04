@@ -21,9 +21,9 @@ package net.nawaman.regparser.typepackage;
 import java.io.Serializable;
 
 import net.nawaman.regparser.Checker;
-import net.nawaman.regparser.PTypeProvider;
-import net.nawaman.regparser.RPGetChecker;
+import net.nawaman.regparser.ParserTypeProvider;
 import net.nawaman.regparser.result.ParseResult;
+import net.nawaman.regparser.types.CheckerProvider;
 import net.nawaman.script.CompileOption;
 import net.nawaman.script.Function;
 import net.nawaman.script.ProblemContainer;
@@ -35,7 +35,7 @@ import net.nawaman.script.Signature;
  *
  * @author Nawapunth Manusitthipol (https://github.com/NawaMan)
  **/
-public class TPGetChecker implements RPGetChecker, Serializable {
+public class TPGetChecker implements CheckerProvider, Serializable {
 	
     private static final long serialVersionUID = 831095862697228605L;
 
@@ -44,7 +44,7 @@ public class TPGetChecker implements RPGetChecker, Serializable {
 							PTypePackage.class,
 							ParseResult.class,
 							String.class,
-							PTypeProvider.class
+							ParserTypeProvider.class
 						);
 
 	static public final String PNTypePackage  = "$TPackage";
@@ -77,8 +77,8 @@ public class TPGetChecker implements RPGetChecker, Serializable {
 	Function     GetCheckerFunction = null;
 
 	/** Returns the checker */
-	public Checker getChecker(ParseResult pHostResult, String pParam, PTypeProvider pProvider) {
-		PTypeProvider TP = PTypeProvider.Library.getEither(this.TypePackage, pProvider);
+	public Checker getChecker(ParseResult pHostResult, String pParam, ParserTypeProvider pProvider) {
+		ParserTypeProvider TP = ParserTypeProvider.Library.either(this.TypePackage, pProvider);
 		return (Checker)this.GetCheckerFunction.run(this.TypePackage, pHostResult, pParam, TP);
 	}
 }

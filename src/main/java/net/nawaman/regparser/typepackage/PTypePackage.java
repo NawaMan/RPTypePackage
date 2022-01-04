@@ -41,19 +41,19 @@ import java.util.Vector;
 
 import net.nawaman.javacompiler.JavaCompiler;
 import net.nawaman.javacompiler.JavaCompilerObjectInputStream;
-import net.nawaman.regparser.PType;
-import net.nawaman.regparser.PTypeProvider;
-import net.nawaman.regparser.PTypeProviderPocket;
-import net.nawaman.regparser.RPGetChecker;
+import net.nawaman.regparser.ParserType;
+import net.nawaman.regparser.ParserTypeProvider;
+import net.nawaman.regparser.ParserTypePocket;
 import net.nawaman.regparser.RegParser;
-import net.nawaman.regparser.Util;
 import net.nawaman.regparser.codereplace.CodeReplacer;
 import net.nawaman.regparser.codereplace.RegParser2Java;
 import net.nawaman.regparser.codereplace.RegParser2JavaScript;
 import net.nawaman.regparser.result.ParseResult;
 import net.nawaman.regparser.typepackage.PTKind.Data;
-import net.nawaman.regparser.types.PTComposable;
-import net.nawaman.regparser.types.PTSimple;
+import net.nawaman.regparser.types.CheckerProvider;
+import net.nawaman.regparser.types.ComposableParserType;
+import net.nawaman.regparser.types.SimpleParserType;
+import net.nawaman.regparser.utils.Util;
 import net.nawaman.script.CompileOption;
 import net.nawaman.script.Function;
 import net.nawaman.script.ProblemContainer;
@@ -71,7 +71,7 @@ import net.nawaman.util.UObject;
  *
  * @author Nawapunth Manusitthipol (https://github.com/NawaMan)
  **/
-public class PTypePackage implements PTypeProvider {
+public class PTypePackage implements ParserTypeProvider {
 
 	/** Ensure that TPackageScriptEngine is registed. */
 	static public void EnsureEngineRegisted() {
@@ -101,25 +101,25 @@ public class PTypePackage implements PTypeProvider {
 	
 	/** Create an empty parser-type package */
 	public PTypePackage() {
-		this(null, (PType[])null);
+		this(null, (ParserType[])null);
 	}
 	
 	/** Creates a parser-type package with a scope */
-	public PTypePackage(PType ... pTypes) {
+	public PTypePackage(ParserType ... pTypes) {
 		this(null, pTypes);
 	}
 	
 	/** Creates a parser-type package with a scope */
 	public PTypePackage(Scope.Simple pScope) {
-		this(pScope, (PType[])null);
+		this(pScope, (ParserType[])null);
 	}
 	
 	/** Creates a parser-type package with a scope and a set of native types */
-	public PTypePackage(Scope.Simple pScope, PType ... pTypes) {
+	public PTypePackage(Scope.Simple pScope, ParserType ... pTypes) {
 		this.setMainScope(pScope);
 		
 		// Add native types
-		if(pTypes != null) { for(PType T : pTypes) { if(T == null) continue; this.addNativeType(T); } }
+		if(pTypes != null) { for(ParserType T : pTypes) { if(T == null) continue; this.addNativeType(T); } }
 
 		// Common Type for parsing type kind and spec
 		ensureKindAndSpecParserProvider();
@@ -185,10 +185,10 @@ public class PTypePackage implements PTypeProvider {
 		"#end def_kind;",
 		PTypePackage.class.getCanonicalName(),
 		Scope.class.getCanonicalName(),
-		PType.class.getCanonicalName(),
+		ParserType.class.getCanonicalName(),
 		
 		RegParser   .class.getCanonicalName(),
-		RPGetChecker.class.getCanonicalName(),
+		CheckerProvider.class.getCanonicalName(),
 		
 		ScriptManager.class.getCanonicalName(),
 		RegParser    .class.getCanonicalName(),
@@ -200,11 +200,11 @@ public class PTypePackage implements PTypeProvider {
 		TPCompiler.class.getCanonicalName(),
 		TPCompiler.class.getCanonicalName(),
 		
-		PTSimple    .class.getCanonicalName(),
-		PTComposable.class.getCanonicalName(),
+		SimpleParserType    .class.getCanonicalName(),
+		ComposableParserType.class.getCanonicalName(),
 		
-		PTSimple    .class.getCanonicalName(),
-		PTComposable.class.getCanonicalName()
+		SimpleParserType    .class.getCanonicalName(),
+		ComposableParserType.class.getCanonicalName()
 	);
 	
 	/** Cache of the simple type kind */
@@ -243,18 +243,18 @@ public class PTypePackage implements PTypeProvider {
 	
 	static void ensureKindAndSpecParserProvider() {
 		if(KindAndSpecParserProvider == null) {
-			KindAndSpecParserProvider = new PTypeProvider.Extensible(
+			KindAndSpecParserProvider = new ParserTypeProvider.Extensible(
 				// Identifier
-				new PTSimple("Identifier", RegParser.newRegParser("[a-zA-Z_][a-zA-Z_0-9]*")),
+				new SimpleParserType("Identifier", RegParser.compile("[a-zA-Z_][a-zA-Z_0-9]*")),
 				// TypeName
-				new PTSimple("TypeName", RegParser.newRegParser("[:$:]?[a-zA-Z_][a-zA-Z_0-9]*([:+:]|[:*:])?([:?:]|[:~:])?([:[:][:]:])?")),
+				new SimpleParserType("TypeName", RegParser.compile("[:$:]?[a-zA-Z_][a-zA-Z_0-9]*([:+:]|[:*:])?([:?:]|[:~:])?([:[:][:]:])?")),
 				// Ignored
-				new PTSimple("Ignored",
-					RegParser.newRegParser(
+				new SimpleParserType("Ignored",
+					RegParser.compile(
 						"([:WhiteSpace:] | [:/:][:/:][^[:NewLine:]]*[:NewLine:] | [:/:][:*:](^[:*:][:/:])*[:*:][:/:] )*")),
 				// Ignored without NewLine
-				new PTSimple("IgnoredNoNewLine",
-					RegParser.newRegParser(
+				new SimpleParserType("IgnoredNoNewLine",
+					RegParser.compile(
 						"([:Blank:] | [:/:][:/:][^[:NewLine:]]*[:NewLine:] | [:/:][:*:](^[:*:][:/:])*[:*:][:/:] )*"))
 			);
 		}
@@ -263,7 +263,7 @@ public class PTypePackage implements PTypeProvider {
 	// Data ------------------------------------------------------------------------------------------------------------
 
 	/** Type provider for internal use */
-	static PTypeProvider.Extensible KindAndSpecParserProvider;
+	static ParserTypeProvider.Extensible KindAndSpecParserProvider;
 	
 	transient Scope.Simple MainScope = null;
 	
@@ -274,7 +274,7 @@ public class PTypePackage implements PTypeProvider {
 	TreeMap<String, PTSpec>      TSpecs     = null;
 
 	/** Native types - that does not be create from spec */
-	TreeMap<String, PType> PNTypes = null;
+	TreeMap<String, ParserType> PNTypes = null;
 	
 	TreeMap<String, String>       ErrorMsgs = null;
 	HashMap<  String, Serializable> MoreDatas = null;
@@ -282,7 +282,7 @@ public class PTypePackage implements PTypeProvider {
 	/** Type kinds */
 	transient TreeMap<String, PTKind> RPTKinds = null;
 	/** Types that are created from specs */
-	transient TreeMap<String, PType>  RPTypes  = null;
+	transient TreeMap<String, ParserType>  RPTypes  = null;
 	
 	/** Set the main scope of this type package */
 	public boolean setMainScope(Scope.Simple pScope) {
@@ -387,7 +387,7 @@ public class PTypePackage implements PTypeProvider {
 		else if((pDefStr == DefKindErrorStr)  && (Kind_Error  != null)) TK = Kind_Error;
 		else {
 			// Parse the definition
-			if(PTKind.PTKindParser == null) PTKind.PTKindParser = RegParser.newRegParser(PTKind.PTKindParserString);
+			if(PTKind.PTKindParser == null) PTKind.PTKindParser = RegParser.compile(PTKind.PTKindParserString);
 			ParseResult PR = PTKind.PTKindParser.parse(pDefStr, KindAndSpecParserProvider);
 			if(PR == null) throw new RuntimeException("Invalid Kind Definition: \n" + pDefStr);
 	
@@ -457,21 +457,21 @@ public class PTypePackage implements PTypeProvider {
 	// TypeProvider ----------------------------------------------------------------------------------------------------
 	
 	/** Returns type from name */
-	public PType getType(String pName) {
+	public ParserType type(String pName) {
 		if(pName == null) return null;
 		if(this.RPTypes != null) {
-			PType PT = this.RPTypes.get(pName);
+			ParserType PT = this.RPTypes.get(pName);
 			if(PT != null) return PT;
 		}
 		if(this.PNTypes != null) {
-			PType PT = this.PNTypes.get(pName);
+			ParserType PT = this.PNTypes.get(pName);
 			if(PT != null) return PT;
 		}
 		return null;
 	}
 	
 	/** Returns the names of all types in this provider */
-	public Set<String> getAllTypeNames() {
+	public Set<String> typeNames() {
 		if(this.RPTypes == null) return null;
 		return this.RPTypes.keySet();
 	}
@@ -483,20 +483,20 @@ public class PTypePackage implements PTypeProvider {
 	}
 	
 	/** Returns the names of all types in this provider */
-	public Set<String> getAllErrorMessageNames() {
+	public Set<String> errorMessageNames() {
 		if(this.ErrorMsgs == null) return null;
 		return this.ErrorMsgs.keySet();
 	}
 	
 	/** Get an error message  */
-	public String getErrorMessage(String pErrName) {
+	public String errorMessage(String pErrName) {
 		return (this.ErrorMsgs != null)?this.ErrorMsgs.get(pErrName):null;
 	}
 	
 	// Types -----------------------------------------------------------------------------------------------------------
 
 	/** Add type from type spec */
-	public boolean addNativeType(PType pType) {
+	public boolean addNativeType(ParserType pType) {
 		if(this.IsFrozen) return false;
 		if(pType == null) return false;
 		
@@ -507,7 +507,7 @@ public class PTypePackage implements PTypeProvider {
 		if((this.PNTypes != null) && this.PNTypes.containsKey(pType.name()))
 			throw new RuntimeException("Add Type Error: The given type `"+pType.name()+"` is already exist in this package.");
 		
-		if(this.PNTypes == null) this.PNTypes = new TreeMap<String, PType>();
+		if(this.PNTypes == null) this.PNTypes = new TreeMap<String, ParserType>();
 		this.PNTypes.put(pType.name(), pType);
 		return true;
 	}
@@ -537,7 +537,7 @@ public class PTypePackage implements PTypeProvider {
 	public String addType(String pTypeDefStr) {
 
 		// Extract the Kind name
-		if(KindNameExtractor == null) KindNameExtractor = RegParser.newRegParser(KindNameExtractorStr);
+		if(KindNameExtractor == null) KindNameExtractor = RegParser.compile(KindNameExtractorStr);
 		
 		ParseResult KindNamePR = KindNameExtractor.parse(pTypeDefStr, KindAndSpecParserProvider);
 		if(KindNamePR == null) throw new RuntimeException("Invalid Kind Definition: " + pTypeDefStr);
@@ -554,7 +554,7 @@ public class PTypePackage implements PTypeProvider {
 		// Get the name and checks if it already exist
 		String TypeName = PR.textOf("$Name");
 		if(TypeName == null) throw new RuntimeException("Invalid Type Definition: Type Name is not found: " + pTypeDefStr);
-		if(this.getType(TypeName) != null)
+		if(this.type(TypeName) != null)
 			throw new RuntimeException("Invalid Type Definition: The type is already exist in this package: " + pTypeDefStr);
 		
 		PTSpec Spec = Kind.newSpec(TypeName);
@@ -576,9 +576,9 @@ public class PTypePackage implements PTypeProvider {
 		if(!this.TSpecs.containsKey(pName)) return false;
 		PTKind K = this.getTypeKind(this.TSpecs.get(pName).getKind());
 		if(K == null) return false;
-		if(this.RPTypes == null) this.RPTypes = new TreeMap<String, PType>();
-		PType PT = K.newPTypeFromSpec(this, this.TSpecs.get(pName));
-		PTypeProvider.Simple.exclusivelyInclude(this, PT);
+		if(this.RPTypes == null) this.RPTypes = new TreeMap<String, ParserType>();
+		ParserType PT = K.newPTypeFromSpec(this, this.TSpecs.get(pName));
+		ParserTypeProvider.Simple.exclusivelyInclude(this, PT);
 		this.RPTypes.put(pName, PT);
 		return true;
 	}
@@ -605,11 +605,11 @@ public class PTypePackage implements PTypeProvider {
 	/** Returns the string representation of a spec type */
 	public String getTypeToString(String pName) {
 		if(pName == null) return null;
-		return this.getTypeToString(this.getType(pName));
+		return this.getTypeToString(this.type(pName));
 	}
 
 	/** Returns the string representation of a spec type */
-	public String getTypeToString(PType pType) {
+	public String getTypeToString(ParserType pType) {
 		if(pType == null) return null;
 		PTSpec Spec = this.getTheTypeSpec(pType.name());
 		if(Spec == null) return pType.toString();
@@ -823,9 +823,9 @@ public class PTypePackage implements PTypeProvider {
 		
 		// Load native type
 		try {
-			TreeMap<String, PType> Types = (TreeMap<String, PType>)aStream.readObject();
+			TreeMap<String, ParserType> Types = (TreeMap<String, ParserType>)aStream.readObject();
 			if(Types != null) {
-				this.PNTypes = new TreeMap<String, PType>();
+				this.PNTypes = new TreeMap<String, ParserType>();
 				for(String Name : Types.keySet()) this.PNTypes.put(Name, Types.get(Name));
 			}
 		} catch(Exception E) {
@@ -834,12 +834,12 @@ public class PTypePackage implements PTypeProvider {
 		
 		// Load spec type
 		try {
-			TreeMap<String, PType> Types = (TreeMap<String, PType>)aStream.readObject();
+			TreeMap<String, ParserType> Types = (TreeMap<String, ParserType>)aStream.readObject();
 			if(Types != null) {
-				this.RPTypes = new TreeMap<String, PType>();
+				this.RPTypes = new TreeMap<String, ParserType>();
 				for(String Name : Types.keySet()) {
 					this.RPTypes.put(Name, Types.get(Name));
-					PTypeProvider.Simple.exclusivelyInclude(this, Types.get(Name));
+					ParserTypeProvider.Simple.exclusivelyInclude(this, Types.get(Name));
 				}
 			}
 		} catch(Exception E) {
@@ -967,7 +967,7 @@ public class PTypePackage implements PTypeProvider {
 		")*";
 	static private RegParser DefsExtractor = null;
 	static RegParser getDefsExtractor() {
-		if(DefsExtractor == null) DefsExtractor = RegParser.newRegParser(DefsExtractorStr);
+		if(DefsExtractor == null) DefsExtractor = RegParser.compile(DefsExtractorStr);
 		return DefsExtractor;
 	}
 	
@@ -1093,7 +1093,7 @@ public class PTypePackage implements PTypeProvider {
 		if(Defs != null) {
 
 			// Extract all native types
-			if(ClassPathExtractor == null) ClassPathExtractor = RegParser.newRegParser(ClassPathExtractorStr);
+			if(ClassPathExtractor == null) ClassPathExtractor = RegParser.compile(ClassPathExtractorStr);
 			
 			// Extract all ClassPaths
 			for(String Def : Defs) {
@@ -1135,7 +1135,7 @@ public class PTypePackage implements PTypeProvider {
 			}
 			
 			// Extract all native types
-			if(NativeTypeExtractor == null) NativeTypeExtractor = RegParser.newRegParser(NativeExtractorStr);
+			if(NativeTypeExtractor == null) NativeTypeExtractor = RegParser.compile(NativeExtractorStr);
 			// Add Native type
 			for(String Def : Defs) {
 				if((Def == null) || (Def.length() == 0)) continue;
@@ -1154,7 +1154,7 @@ public class PTypePackage implements PTypeProvider {
 				try {
 					ByteArrayInputStream BAIS = new ByteArrayInputStream(Bytes);
 					Serializable[] S = Util.loadObjectsFromStream(BAIS);
-					for(int i = S.length; --i >= 0; ) this.addNativeType((PType)S[i]);
+					for(int i = S.length; --i >= 0; ) this.addNativeType((ParserType)S[i]);
 				} catch(Exception E) {
 					throw new RuntimeException("Invalid Definitions: Unable to deserialize native types: \n" + Def, E);
 				}
@@ -1168,7 +1168,7 @@ public class PTypePackage implements PTypeProvider {
 			}
 
 			// Extract all error messages
-			if(ErrorMessageExtractor == null) ErrorMessageExtractor = RegParser.newRegParser(ErrorMessageExtractorStr);
+			if(ErrorMessageExtractor == null) ErrorMessageExtractor = RegParser.compile(ErrorMessageExtractorStr);
 			// Extract all errors
 			for(String Def : Defs) {
 				if((Def == null) || (Def.length() == 0)) continue;
@@ -1193,7 +1193,7 @@ public class PTypePackage implements PTypeProvider {
 			}
 
 			// Extract all native types
-			if(DataExtractor == null) DataExtractor = RegParser.newRegParser(DataExtractorStr);
+			if(DataExtractor == null) DataExtractor = RegParser.compile(DataExtractorStr);
 			// Extract all data
 			for(String Def : Defs) {
 				if((Def == null) || (Def.length() == 0)) continue;
@@ -1473,38 +1473,38 @@ public class PTypePackage implements PTypeProvider {
 
 	/** Load a type package as text from a file named FN */
 	static public PTypePackage loadAsPocketFromFile(String FN) throws IOException {
-		PTypeProvider PTP = PTypeProviderPocket.Simple.loadAsPocketFromFile(FN);
+		ParserTypeProvider PTP = ParserTypePocket.Simple.loadAsPocketFromFile(FN);
 		if(!(PTP instanceof PTypePackage)) throw new IllegalArgumentException("The given file '"+FN+"' does not contain a PTypePackage.");
 		return (PTypePackage)PTP;
 	}
 
 	/** Load a type package as text from a file F */
 	static public PTypePackage loadAsPocketFromFile(File F) throws IOException {
-		PTypeProvider PTP = PTypeProviderPocket.Simple.loadAsPocketFromFile(F);
+		ParserTypeProvider PTP = ParserTypePocket.Simple.loadAsPocketFromFile(F);
 		if(!(PTP instanceof PTypePackage)) throw new IllegalArgumentException("The given file '"+F.toString()+"' does not contain a PTypePackage.");
 		return (PTypePackage)PTP;
 	}
 
 	/** Load a type package as text from a stream IS */
 	static public PTypePackage loadAsPocketFromStream(InputStream IS) throws IOException {
-		PTypeProvider PTP = PTypeProviderPocket.Simple.loadAsPocketFromStream(IS);
+		ParserTypeProvider PTP = ParserTypePocket.Simple.loadAsPocketFromStream(IS);
 		if(!(PTP instanceof PTypePackage)) if(PTP instanceof PTypePackage) throw new IllegalArgumentException("The given stream '"+IS.toString()+"' does not contain a PTypePackage.");
 		return (PTypePackage)PTP;
 	}
 	
 	/** Save this type package as text to a file named FN */
 	public void saveAsPocketToFile(String FN) throws IOException {
-		PTypeProviderPocket.Simple.savePocketToFile(FN, new PTypePackagePocket((this)));
+		ParserTypePocket.Simple.savePocketToFile(FN, new PTypePackagePocket((this)));
 	}
 
 	/** Save this type package as text to a file F */
 	public void saveAsPocketToFile(File F) throws IOException {
-		PTypeProviderPocket.Simple.savePocketToFile(F, new PTypePackagePocket((this)));
+		ParserTypePocket.Simple.savePocketToFile(F, new PTypePackagePocket((this)));
 	}
 
 	/** Save this type package as text to a stream OS */
 	public void saveAsPocketToStream(OutputStream OS) throws IOException {
-		PTypeProviderPocket.Simple.savePocketToStream(OS, new PTypePackagePocket((this)));
+		ParserTypePocket.Simple.savePocketToStream(OS, new PTypePackagePocket((this)));
 	}
 	
 	// Simplifying the code --------------------------------------------------------------------------------------------

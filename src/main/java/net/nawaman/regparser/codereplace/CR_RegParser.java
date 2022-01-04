@@ -21,11 +21,11 @@ package net.nawaman.regparser.codereplace;
 import java.util.HashMap;
 
 import net.nawaman.regparser.CompilationContext;
-import net.nawaman.regparser.PType;
-import net.nawaman.regparser.PTypeProvider;
-import net.nawaman.regparser.RPCompiler;
+import net.nawaman.regparser.ParserType;
+import net.nawaman.regparser.ParserTypeProvider;
 import net.nawaman.regparser.RegParser;
 import net.nawaman.regparser.result.ParseResult;
+import net.nawaman.regparser.types.ResultCompiler;
 
 /**
  * Code replacer for RegParser
@@ -80,7 +80,7 @@ abstract public class CR_RegParser extends CodeReplacer {
 		"	($Kind;)"+
 		")";
 	
-	private final PTypeProvider.Extensible PTProvider;
+	private final ParserTypeProvider.Extensible PTProvider;
 	
 	/**
 	 * Constructs a CodeReplace for RegParser language.
@@ -99,13 +99,13 @@ abstract public class CR_RegParser extends CodeReplacer {
 		
 		final CR_RegParser This = this;
 		
-		this.PTProvider = new PTypeProvider.Extensible();
+		this.PTProvider = new ParserTypeProvider.Extensible();
 		this.PTProvider.addType(
 			PT_ToBeReplaced,
-			RegParser.newRegParser(this.PTProvider, SubParserStr),
-			new RPCompiler() {
+			RegParser.compile(this.PTProvider, SubParserStr),
+			new ResultCompiler() {
 				public Object compile(ParseResult $ThisResult, int $EIndex, String pParam, CompilationContext pContext,
-						PTypeProvider $Provider) {
+						ParserTypeProvider $Provider) {
 					ParseResult $Result = $ThisResult.subResultOf($EIndex);
 					if($Result == null) {
 						String T = $ThisResult.textOf($EIndex);
@@ -167,10 +167,10 @@ abstract public class CR_RegParser extends CodeReplacer {
 		
 		this.PTProvider.addType(
 			PT_CodeBody,
-			RegParser.newRegParser(this.PTProvider, CodeBodyRP),
-			new RPCompiler() {
+			RegParser.compileRegParser(this.PTProvider, CodeBodyRP),
+			new ResultCompiler() {
 				public Object compile(ParseResult $ThisResult, int $EIndex, String pParam, CompilationContext pContext,
-						PTypeProvider $Provider) {
+						ParserTypeProvider $Provider) {
 					
 					ParseResult $Result = $ThisResult.subResultOf($EIndex);
 					if($Result == null) {
@@ -226,7 +226,7 @@ abstract public class CR_RegParser extends CodeReplacer {
 			String TypePackageName, String pCCName, HashMap<String, String> pParams, StringBuilder SB) {
 		String Body = RPResult.getBody();
 
-		PType PT = this.PTProvider.getType(PT_CodeBody);
+		ParserType PT = this.PTProvider.type(PT_CodeBody);
 		CContext CC = new CContext(TypePackageName, pCCName, SB);
 		PT.compile(Body, null, CC, this.PTProvider);
 	}

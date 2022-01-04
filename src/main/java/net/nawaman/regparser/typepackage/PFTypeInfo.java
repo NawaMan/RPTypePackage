@@ -41,7 +41,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.text.Caret;
 import javax.swing.text.JTextComponent;
 
-import net.nawaman.regparser.PType;
+import net.nawaman.regparser.ParserType;
 import net.nawaman.swing.LineNumberedTextComponentPanel;
 
 /**
@@ -118,8 +118,8 @@ public class PFTypeInfo extends javax.swing.JPanel {
 		this.TF_Name.setText(this.PrevTypeName);
 		
 		// Get the type
-		PType PT = ((this.TFactory == null)||(this.TFactory.getTPackage() == null))
-						?null:this.TFactory.getTPackage().getType(this.TypeName);
+		ParserType PT = ((this.TFactory == null)||(this.TFactory.getTPackage() == null))
+						?null:this.TFactory.getTPackage().type(this.TypeName);
 		if(PT == null) {
 			JOptionPane.showMessageDialog(this, "The type named '"+this.TypeName+"' does not exist.");
 			return;
@@ -486,7 +486,7 @@ public class PFTypeInfo extends javax.swing.JPanel {
 			case 2: TName += "~"; break;
 		}
 		
-		if(this.TFactory.getTPackage().getType(TName) != null) {
+		if(this.TFactory.getTPackage().type(TName) != null) {
 			JOptionPane.showMessageDialog(this, "The type named '"+TName+"' is already exist.");
 			// Revert
 			try {

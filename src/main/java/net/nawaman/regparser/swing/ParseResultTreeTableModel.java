@@ -20,8 +20,8 @@ package net.nawaman.regparser.swing;
 
 import java.util.Hashtable;
 
-import net.nawaman.regparser.Util;
 import net.nawaman.regparser.result.ParseResult;
+import net.nawaman.regparser.utils.Util;
 import sun.sdn.swing.treetable.AbstractTreeTableModel;
 import sun.sdn.swing.treetable.JTreeTable;
 import sun.sdn.swing.treetable.TreeTableModel;

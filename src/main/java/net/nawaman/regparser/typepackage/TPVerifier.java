@@ -20,9 +20,9 @@ package net.nawaman.regparser.typepackage;
 
 import java.io.Serializable;
 
-import net.nawaman.regparser.PTypeProvider;
-import net.nawaman.regparser.ResultVerifier;
+import net.nawaman.regparser.ParserTypeProvider;
 import net.nawaman.regparser.result.ParseResult;
+import net.nawaman.regparser.types.ResultVerifier;
 import net.nawaman.script.CompileOption;
 import net.nawaman.script.Function;
 import net.nawaman.script.ProblemContainer;
@@ -43,7 +43,7 @@ public class TPVerifier implements ResultVerifier, Serializable {
 							ParseResult.class,
 							ParseResult.class,
 							String.class,
-							PTypeProvider.class
+							ParserTypeProvider.class
 						);
 
 	static public final String PNTypePackage        = "$TPackage";
@@ -79,8 +79,8 @@ public class TPVerifier implements ResultVerifier, Serializable {
 	Function     VerifyFunction = null;
 
 	/** Validate the parse result */
-	public boolean validate(ParseResult pHostResult, ParseResult pThisResult, String pParam, PTypeProvider pProvider) {
-		PTypeProvider TP = PTypeProvider.Library.getEither(this.TypePackage, pProvider);
+	public boolean validate(ParseResult pHostResult, ParseResult pThisResult, String pParam, ParserTypeProvider pProvider) {
+		ParserTypeProvider TP = ParserTypeProvider.Library.either(this.TypePackage, pProvider);
 		return (Boolean)this.VerifyFunction.run(this.TypePackage, pHostResult, pThisResult, pParam, TP);
 	}
 

@@ -20,7 +20,7 @@ package net.nawaman.regparser.typepackage;
 
 import java.io.Serializable;
 
-import net.nawaman.regparser.PType;
+import net.nawaman.regparser.ParserType;
 import net.nawaman.regparser.RegParser;
 import net.nawaman.script.Function;
 import net.nawaman.script.ScriptManager;
@@ -157,23 +157,25 @@ final public class PTKind implements Serializable {
 	}
 	
 	/** Update the reg-parser (internal use only before PTKind should be immutable outside the package) */
-	void updateRegParser() { this.TypeParser = RegParser.newRegParser(this.getSpecParserAsString()); }
+	void updateRegParser() {
+		this.TypeParser = RegParser.compile(this.getSpecParserAsString());
+	}
 	
 	// Constructor -----------------------------------------------------------------------------------------------------
 	
 	/** Signature of the constructors */
 	static public final Signature TypeConstructorSignature =
-		new Signature.Simple(null, PType.class, false, PTypePackage.class, PTSpec.class);
+		new Signature.Simple(null, ParserType.class, false, PTypePackage.class, PTSpec.class);
 	
 	/** Returns a newly created PType from the spec */
-	PType newPTypeFromSpec(PTypePackage pPTPackage, PTSpec pPTypeSpec) {
+	ParserType newPTypeFromSpec(PTypePackage pPTPackage, PTSpec pPTypeSpec) {
 		String TSKind = (String)pPTypeSpec.getValue(PTSpec.FN_Kind);
 		if(!this.getName().equals(TSKind))
 			throw new IllegalArgumentException(this.getName() + " type kind cannot process parser type spec of type '"+TSKind+"'");
 			
-		PType     Result = null;
+		ParserType     Result = null;
 		Throwable Cause  = null;
-		try { Result = (PType)this.TypeConstructor.run(pPTPackage, pPTypeSpec); }
+		try { Result = (ParserType)this.TypeConstructor.run(pPTPackage, pPTypeSpec); }
 		catch(Throwable T) { Cause = T; }
 		// Invalid return type
 		if(Result == null)

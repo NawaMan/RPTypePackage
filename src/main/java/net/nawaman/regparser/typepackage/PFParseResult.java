@@ -23,9 +23,11 @@ import java.awt.EventQueue;
 import java.awt.event.KeyEvent;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+
 import javax.swing.JOptionPane;
-import net.nawaman.regparser.PType;
-import net.nawaman.regparser.PTypeRef;
+
+import net.nawaman.regparser.ParserType;
+import net.nawaman.regparser.ParserTypeRef;
 import net.nawaman.regparser.Quantifier;
 import net.nawaman.regparser.RegParser;
 import net.nawaman.regparser.result.ParseResult;
@@ -54,20 +56,20 @@ public class PFParseResult extends javax.swing.JPanel {
 		
 		// Default parser value
 		if(pRegParserStr == null) pRegParserStr = ".*";
-		if(pRegParser    == null) pRegParser    = RegParser.newRegParser(pRegParserStr);
+		if(pRegParser    == null) pRegParser    = RegParser.compile(pRegParserStr);
 		
 		this.TFactory = pTFactory;
 		
 		if((pRegParser != null) && (pRegParser.getEntryCount() == 1) && (pRegParser.getEntryAt(0).typeRef() != null)
-				&& (pRegParser.getEntryAt(0).getQuantifier() == Quantifier.One)) {
-			PTypeRef TRef = pRegParser.getEntryAt(0).typeRef();
+				&& (pRegParser.getEntryAt(0).quantifier() == Quantifier.One)) {
+			ParserTypeRef TRef = pRegParser.getEntryAt(0).typeRef();
 			this.TypeName  = TRef.name();
 			this.TypeParam = TRef.parameter();
 		}
 		
 		if(this.TypeName != null) {	// Given the type name - so it is a type parsing (can compile)
 			// Set the parser and the flag
-			this.Parser = RegParser.newRegParser(new PTypeRef.Simple(this.TypeName, this.TypeParam));
+			this.Parser = ParserTypeRef.of(this.TypeName, this.TypeParam).asRegParser();
 			this.IsTypeParsing = true;
 			
 			String T = "!" + this.TypeName + ((this.TypeParam == null)?"":"("+this.TypeParam+")")+"!";
@@ -304,7 +306,7 @@ public class PFParseResult extends javax.swing.JPanel {
         			
 					try {
 						// Parse and save the debug value
-                    	RegParser.DebugMode        = true;
+                    	RegParser.isDebugMode        = true;
                     	RegParser.DebugPrintStream = PS;
 						parse();
 						TFactory.setStatusBarText("Parse success.");
@@ -312,7 +314,7 @@ public class PFParseResult extends javax.swing.JPanel {
 						TA_DebugResult.setText("<< ERROR!!! - "+E.toString()+" >>");
 						TFactory.setStatusBarText("ERROR: " + E.toString());
 					} finally {
-                    	RegParser.DebugMode        = false;
+                    	RegParser.isDebugMode        = false;
                     	RegParser.DebugPrintStream = null;
 					}
 					
@@ -342,7 +344,7 @@ public class PFParseResult extends javax.swing.JPanel {
 						}
 						
 						PTypePackage TPackage = TFactory.getTPackage();
-						PType Type = TPackage.getType(TypeName);
+						ParserType Type = TPackage.type(TypeName);
 						if(Type == null) {
 							TFactory.setStatusBarText("<< ERROR!! - The RefParser Type named `" + TypeName + "` does not exist.>>");
 							TP_CompileResult.setText("&lt;&lt; !!! ERROR !!! &gt;&gt;");

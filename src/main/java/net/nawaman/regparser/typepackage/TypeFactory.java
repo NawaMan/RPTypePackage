@@ -88,7 +88,7 @@ public class TypeFactory extends javax.swing.JFrame {
 		TypeFactoryWindowCount++;
 
 		// Add the type names into the list
-		Set<String> TNames = this.TPackage.getAllTypeNames();
+		Set<String> TNames = this.TPackage.typeNames();
 		if (TNames != null) {
 			DefaultListModel LModel = (DefaultListModel) this.L_Types.getModel();
 			for (String N : TNames) {
@@ -966,7 +966,7 @@ public class TypeFactory extends javax.swing.JFrame {
 		// Create the RegParser
 		try {
 			String RPStr = this.LNP_Parser.getTextComponent().getText();
-			RegParser RP = RegParser.newRegParser(RPStr);
+			RegParser RP = RegParser.compile(RPStr);
 
 			// Create a new parse tab
 			// Search for a repeat
@@ -991,7 +991,7 @@ public class TypeFactory extends javax.swing.JFrame {
 			} else {
 				// Parse the RegParser
 				try {
-					Parser = RegParser.newRegParser(RPStr);
+					Parser = RegParser.compile(RPStr);
 					if (Parser == null) {
 						this.setStatusBarText("Please enter a valid RegParser!!!");
 						return;
@@ -1022,7 +1022,7 @@ public class TypeFactory extends javax.swing.JFrame {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
     private boolean addNewType(String pTName, String pTypeDef) {
-		if (this.TPackage.getType(pTName) != null)
+		if (this.TPackage.type(pTName) != null)
 			return false;
 
 		// Add an entry on the list
@@ -1496,11 +1496,11 @@ public class TypeFactory extends javax.swing.JFrame {
 							}
 						}
 
-						Set<String> TNames = PTP.getAllTypeNames();
+						Set<String> TNames = PTP.typeNames();
 						if(TNames != null) {
 							// Add Types
 							for (String TName : TNames) {
-								if (Old.getType(TName) != null) {
+								if (Old.type(TName) != null) {
 									Fail.add("Type: " + TName + " (already exist)");
 									continue;
 								}
@@ -1622,7 +1622,7 @@ public class TypeFactory extends javax.swing.JFrame {
 						TF.ThisFileAs     = LoadKind;
 						TF.updateTitle();
 
-						Set<String> TNames = This.TPackage.getAllTypeNames();
+						Set<String> TNames = This.TPackage.typeNames();
 						if (!This.HaveBeenEdited
 								&& ((TNames == null) || (TNames.size() == 0))
 								&& ((This.TPackage.KDatas == null)
@@ -2142,7 +2142,7 @@ public class TypeFactory extends javax.swing.JFrame {
 				public void actionPerformed(ActionEvent e) {
 					String Msg = (String)JOptionPane.showInputDialog(This,"Enter the " + FKind + " message for '"+FName+"'.",
 							"Create new " + FKind, JOptionPane.QUESTION_MESSAGE, null, null,
-							This.TPackage.getErrorMessage(FName));
+							This.TPackage.errorMessage(FName));
 					if(Msg == null) return;
 					
 					try {

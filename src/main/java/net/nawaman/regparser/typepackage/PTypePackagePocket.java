@@ -42,7 +42,7 @@ import javax.swing.JOptionPane;
  *
  * @author Nawapunth Manusitthipol (https://github.com/NawaMan)
  */
-public class PTypePackagePocket implements PTypeProviderPocket {
+public class PTypePackagePocket implements ParserTypePocket {
 		
     private static final long serialVersionUID = 4618370349942176817L;
 
@@ -53,7 +53,7 @@ public class PTypePackagePocket implements PTypeProviderPocket {
 	transient boolean      isRepackagingNeeded = false;
 	transient PTypePackage TPackage            = null;
 
-	public PTypeProvider getTProvider() {
+	public ParserTypeProvider typeProvider() {
 		return this.TPackage;
 	}
 		
