@@ -21,7 +21,7 @@ import net.nawaman.script.Signature;
 import net.nawaman.script.Tools;
 import net.nawaman.script.Utils;
 import net.nawaman.usepath.FileExtFilter;
-import net.nawaman.usepath.UFFileExtFilter;
+import net.nawaman.usepath.FileExtUsableFilter;
 import net.nawaman.usepath.UsableFilter;
 
 /**
@@ -47,9 +47,9 @@ public class TPackageScriptEngine extends ScriptEngine.Simple {
 	static public final ExecutableInfo TYPEDEF_EXECINFO  = new ExecutableInfo(null, "function", TYPEDEF_SIGNATURE, SIGNATURE_SPEC, null);
 	
 	/** Filter for TPTFile only (tpt = TypePackage as Text) */
-	static class TPTFileFilter extends UFFileExtFilter {
+	static class TPTFileFilter extends FileExtUsableFilter {
 		public TPTFileFilter() {
-			super(new FileExtFilter.FEFExtList("tpt"));
+			super(new FileExtFilter.ExtListFileFilter("tpt"));
 		}
 	}
 	

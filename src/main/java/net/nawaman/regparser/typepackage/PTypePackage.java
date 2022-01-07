@@ -91,7 +91,11 @@ public class PTypePackage implements ParserTypeProvider {
 	/** Use the PTypePackage form the Usepath */
 	static public PTypePackage Use(String Name) {
 		Object O = ScriptManager.Use(Name);
-		return GetPTypePackageFromUsable(O);
+		try {
+			return GetPTypePackageFromUsable(O);
+		} catch (Exception exception) {
+			throw new RuntimeException("Getting type package fail: " + Name, exception);
+		}
 	}
 	/** Use the PTypePackage form the Usepath */
 	static public PTypePackage UseWithException(String Name) throws IOException, ClassNotFoundException {
@@ -1078,7 +1082,7 @@ public class PTypePackage implements ParserTypeProvider {
 		String FirstLine = pDefs.substring(IgnorePosition, EndOfFirstLine);
 
 		// Later the parameter will be the version number
-		String[] EAndP = ScriptManager.GetEngineNameAndParamFromCode(FirstLine);
+		String[] EAndP = ScriptManager.getEngineNameAndParamFromCode(FirstLine);
 		if((EAndP == null) || (EAndP.length < 2) || !TPackageScriptEngine.ShortName.equals(EAndP[0]) || (EAndP[1] != null))
 			throw new IllegalArgumentException("Invalid Definitions:\n" + pDefs);
 		

@@ -63,7 +63,7 @@ public abstract class CodeReplacer {
 	/** Returns a code replacer that can replace the code */
 	static public CodeReplacer getCodeReplacerFromCode(String pCode) {
 		// Extract the language name and parameter
-		String[] ENameParam = ScriptManager.GetEngineNameAndParamFromCode(pCode);
+		String[] ENameParam = ScriptManager.getEngineNameAndParamFromCode(pCode);
 		if(ENameParam == null) return null;
 		
 		String LanguageName  = ENameParam[0]; if(LanguageName  == null) LanguageName  = "";
@@ -101,7 +101,7 @@ public abstract class CodeReplacer {
 		}
 		
 		// Extract the language name and parameter
-		String          LanguageParam = ScriptManager.GetEngineNameAndParamFromCode(pCode)[1];
+		String          LanguageParam = ScriptManager.getEngineNameAndParamFromCode(pCode)[1];
 		EngineSpecifier TargetEngine  = CReplacer.decodeEngineSpecifier((LanguageParam == null)?"":LanguageParam);
 		return CReplacer.replaceCode(pCode, TargetEngine, pTypeName, ThisResultName, TypePackageName, pCCName, pParams);
 	}
@@ -217,7 +217,7 @@ public abstract class CodeReplacer {
 	final public String replaceCode(String pCode, EngineSpecifier pTargetEngine, String pTypeName, String pThisResultName,
 			String pTypePackageName, String pCCName, HashMap<String, String> pParams) {
 		// Extract the language name and parameter
-		String[] ENameParam = ScriptManager.GetEngineNameAndParamFromCode(pCode);
+		String[] ENameParam = ScriptManager.getEngineNameAndParamFromCode(pCode);
 		if(ENameParam == null)
 			throw new IllegalArgumentException("Unable to extract the script engine name from the given code.");
 		
