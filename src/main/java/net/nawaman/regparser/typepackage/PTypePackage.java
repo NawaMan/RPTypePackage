@@ -392,6 +392,9 @@ public class PTypePackage implements ParserTypeProvider {
 		else {
 			// Parse the definition
 			if(PTKind.PTKindParser == null) PTKind.PTKindParser = RegParser.compile(PTKind.PTKindParserString);
+			if(PTKind.PTKindParser == null) {
+				throw new RuntimeException("Problem compiling this code: \n" + PTKind.PTKindParserString);
+			}
 			ParseResult PR = PTKind.PTKindParser.parse(pDefStr, KindAndSpecParserProvider);
 			if(PR == null) throw new RuntimeException("Invalid Kind Definition: \n" + pDefStr);
 	

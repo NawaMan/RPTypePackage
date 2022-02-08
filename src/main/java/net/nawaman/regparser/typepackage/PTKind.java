@@ -80,11 +80,11 @@ final public class PTKind implements Serializable {
 	/** Prefix of the string parser */
 	static final String StringParserPrefix = 
 		"[:#:]def!Ignored!+%s!Ignored!+parser!Ignored!+($Name:~[:$:]?!Identifier!([:*:]|[:+:])?([:~:]|[:?:])?([:[:][:]:])?~)!Ignored!*[:::](^[:NewLine:])*\n"+
-		"(#Body+:~(^[:NewLine:][:#:]end!Ignored!+def!Ignored!+parser[:;:])*~:~\n";
+		"(#Body:~(^[:NewLine:][:#:]end!Ignored!+def!Ignored!+parser[:;:])*~:~\n";
 	
 	/** Suffix of the string parser */
 	static final String StringParserSuffix =
-		"~)\n"+
+		"~)+\n"+
 		"[:NewLine:][:#:]end!Ignored!+def!Ignored!+parser[:;:]";
 
 
@@ -205,7 +205,7 @@ final public class PTKind implements Serializable {
 	
 	static public final String PTKindParserString = 
 		"[:#:]def[:_:]kind!Ignored!+($KindName:!Identifier!)[:::](^[:NewLine:])*\n"+
-		"(#Body+:~(^[:NewLine:][:#:]end!Ignored!+def_kind[:;:])*~:~\n"+
+		"(#Body:~(^[:NewLine:][:#:]end!Ignored!+def_kind[:;:])*~:~\n"+
 		"	(#Variables:~\n"+
 		"		(^[:NewLine:][:#:]Constructor[:::])*\n"+
 		"		~:~\n"+
@@ -220,7 +220,7 @@ final public class PTKind implements Serializable {
 		"		[:#:]Constructor[:::][^[:NewLine:]]*[:NewLine:]\n"+
 		"		($ConstructorCode:~.*~)\n"+
 		"	~)\n"+
-		"~)\n"+
+		"~)+\n"+
 		"[:NewLine:][:#:]end!Ignored!+def[:_:]kind[:;:]";
 	
 	static RegParser PTKindParser = null; 

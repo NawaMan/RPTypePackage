@@ -140,7 +140,11 @@ public class TPackageScriptEngine extends ScriptEngine.Simple {
 		   (!PTypePackage.class.isAssignableFrom(pSignature.getReturnType())))
 			throw new IllegalArgumentException("Unsupport function signature: " + pSignature);
 		
-		return new GetTypePackageFunction(PTypePackage.newPackageFromDefs(pCode));
+		try {
+			return new GetTypePackageFunction(PTypePackage.newPackageFromDefs(pCode));
+		} catch (RuntimeException e) {
+			throw new RuntimeException("Problem compiling the code: \n" + pCode, e);
+		}
 	}
 
 	/**{@inheritDoc}*/ @Override
